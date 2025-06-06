@@ -3,7 +3,7 @@ import { Container, getContainer } from 'cf-containers';
 
 
 export class PythonReplContainer extends Container {
-  defaultPort = 8000;
+  defaultPort = 8080;
   sleepAfter = '10m';
 }
 
