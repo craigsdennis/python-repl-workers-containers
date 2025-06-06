@@ -124,7 +124,7 @@ export default function HttpRepl() {
         <h3 className="font-semibold text-blue-900 mb-2">How it works:</h3>
         <ul className="text-sm text-blue-800 space-y-1">
           <li><strong>Stateless:</strong> Each execution is independent (uses /exec)</li>
-          <li><strong>Session:</strong> Creates a persistent Python session (uses /session then /exec/{{id}})</li>
+          <li><strong>Session:</strong> Creates a persistent Python session (uses /session then /exec/{'{id}'})</li>
           <li>Try defining variables in session mode to see persistence!</li>
         </ul>
       </div>
