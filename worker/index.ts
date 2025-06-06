@@ -1,12 +1,14 @@
+import {env} from "cloudflare:workers";
+import { Container, getContainer } from 'cf-containers';
+
+
+export class PythonReplContainer extends Container {
+  defaultPort = 8000;
+  sleepAfter = '10m';
+}
+
 export default {
   fetch(request) {
-    const url = new URL(request.url);
-
-    if (url.pathname.startsWith("/api/")) {
-      return Response.json({
-        name: "Cloudflare",
-      });
-    }
-		return new Response(null, { status: 404 });
+		return getContainer(env.PYTHON_REPL_CONTAINER).fetch(request);
   },
 } satisfies ExportedHandler<Env>;
