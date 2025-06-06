@@ -10,3 +10,6 @@ This is for showing off a Python REPL.
 Can you help me build out a very simple tailwind based front end that hits those endpoints?
 
 You can remove any current styling and go for your own. 
+
+## Better Terminal
+Okay on the Websocket front-end can I use a terminal that let's me just type in and send over websocket on enter. It should feel like the Python REPL.│

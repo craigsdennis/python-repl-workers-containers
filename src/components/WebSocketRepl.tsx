@@ -107,72 +107,87 @@ export default function WebSocketRepl() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-black text-green-400 font-mono">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between bg-gray-900 px-4 py-2 border-b border-gray-700">
-        <div className="flex items-center space-x-4">
-          <h1 className="text-lg font-bold text-white">WebSocket Python REPL</h1>
-          <div className="flex items-center space-x-2">
-            <div className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`}></div>
-            <span className="text-xs text-gray-300">
-              {connected ? 'Connected' : 'Disconnected'}
-            </span>
+      <div className="bg-white border border-gray-200 rounded-lg px-6 py-4 shadow-sm">
+        <h1 className="text-2xl font-bold text-gray-900">
+          Cloudflare Containers Demo - Python REPL
+        </h1>
+        <p className="text-gray-600 text-sm mt-1">
+          Interactive Python interpreter powered by WebSocket connections
+        </p>
+      </div>
+
+      {/* Terminal Container */}
+      <div className="max-w-6xl mx-auto w-full">
+        <div className="bg-black text-green-400 font-mono rounded-lg shadow-lg overflow-hidden h-96">
+          {/* Terminal Header */}
+          <div className="flex items-center justify-between bg-gray-900 px-4 py-2 border-b border-gray-700">
+            <div className="flex items-center space-x-4">
+              <h2 className="text-sm font-bold text-white">WebSocket Python REPL</h2>
+              <div className="flex items-center space-x-2">
+                <div className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                <span className="text-xs text-gray-300">
+                  {connected ? 'Connected' : 'Disconnected'}
+                </span>
+              </div>
+            </div>
+            <div className="space-x-2">
+              <button
+                onClick={clearTerminal}
+                className="px-3 py-1 text-xs bg-gray-700 text-gray-300 rounded hover:bg-gray-600"
+              >
+                Clear
+              </button>
+              <button
+                onClick={reconnect}
+                disabled={connected}
+                className="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+              >
+                Reconnect
+              </button>
+            </div>
+          </div>
+
+          {/* Terminal */}
+          <div className="flex-1 flex flex-col h-80">
+            {/* Terminal Output */}
+            <div
+              ref={terminalRef}
+              className="flex-1 overflow-auto p-4 space-y-1"
+            >
+              {terminalHistory.map((line, index) => (
+                <div key={index} className="whitespace-pre-wrap">
+                  {line}
+                </div>
+              ))}
+            </div>
+
+            {/* Input Line */}
+            <div className="flex items-center px-4 py-2 border-t border-gray-700">
+              <span className="text-green-400 mr-2">{'>>>'}</span>
+              <input
+                ref={inputRef}
+                type="text"
+                value={currentInput}
+                onChange={(e) => setCurrentInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="flex-1 bg-transparent text-green-400 outline-none placeholder-gray-500"
+                placeholder={connected ? "Enter Python code..." : "Disconnected"}
+                disabled={!connected}
+                autoComplete="off"
+                spellCheck="false"
+              />
+            </div>
+          </div>
+
+          {/* Terminal Footer */}
+          <div className="px-4 py-1 bg-gray-900 border-t border-gray-700">
+            <p className="text-xs text-gray-500">
+              Press Enter to execute • Use ↑/↓ arrows for history • Real-time Python REPL
+            </p>
           </div>
         </div>
-        <div className="space-x-2">
-          <button
-            onClick={clearTerminal}
-            className="px-3 py-1 text-xs bg-gray-700 text-gray-300 rounded hover:bg-gray-600"
-          >
-            Clear
-          </button>
-          <button
-            onClick={reconnect}
-            disabled={connected}
-            className="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
-          >
-            Reconnect
-          </button>
-        </div>
-      </div>
-
-      {/* Terminal */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Terminal Output */}
-        <div
-          ref={terminalRef}
-          className="flex-1 overflow-auto p-4 space-y-1"
-        >
-          {terminalHistory.map((line, index) => (
-            <div key={index} className="whitespace-pre-wrap">
-              {line}
-            </div>
-          ))}
-        </div>
-
-        {/* Input Line */}
-        <div className="flex items-center px-4 py-2 border-t border-gray-700">
-          <span className="text-green-400 mr-2">{'>>>'}</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={currentInput}
-            onChange={(e) => setCurrentInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent text-green-400 outline-none placeholder-gray-500"
-            placeholder={connected ? "Enter Python code..." : "Disconnected"}
-            disabled={!connected}
-            autoComplete="off"
-            spellCheck="false"
-          />
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="px-4 py-1 bg-gray-900 border-t border-gray-700">
-        <p className="text-xs text-gray-500">
-          Press Enter to execute • Use ↑/↓ arrows for history • Real-time Python REPL
-        </p>
       </div>
     </div>
   );
