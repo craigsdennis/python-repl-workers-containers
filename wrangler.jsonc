@@ -17,7 +17,7 @@
   "containers": [
     {
       "class_name": "PythonReplContainer",
-      "max_instances": 10,
+      "max_instances": 1,
       "name": "python-repl-1",
       "configuration": { "image": "./Dockerfile" }
     }
